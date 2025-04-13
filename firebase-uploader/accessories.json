@@ -675,38 +675,6 @@
       },
       {
         "price": {
-          "amount": 149.0,
-          "currencyCode": "EGP"
-        },
-        "product": {
-          "title": "TNK23GCOT--530TM1",
-          "id": "8045876773088",
-          "type": "TANK "
-        },
-        "id": "44011863834889",
-        "image": {
-          "src": "//townteam.com/cdn/shop/products/1_f536d6f0-481a-45b1-bd6a-13272e3f8cb2.jpg?v=1675843632"
-        },
-        "color": "Grey"
-      },
-      {
-        "price": {
-          "amount": 399.0,
-          "currencyCode": "EGP"
-        },
-        "product": {
-          "title": "PER22SPER99011TM1",
-          "id": "8045876773088",
-          "type": "PERFUMES "
-        },
-        "id": "44011863834890",
-        "image": {
-          "src": "//townteam.com/cdn/shop/files/1_8d2ef2c6-f29c-4488-b3c5-d4ac7744c440.png?v=1707378703"
-        },
-        "color": "Black"
-      },
-      {
-        "price": {
           "amount": 349.0,
           "currencyCode": "EGP"
         },
