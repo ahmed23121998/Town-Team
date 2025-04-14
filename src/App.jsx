@@ -1,34 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
 import AddProduct from "./components/AddProduct";
 import ProductList from "./components/Productlist";
-import { Box, Typography, Divider } from "@mui/material";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import UserInfo from "./components/UserInfo";
+import PlaceOrder from "./components/PlaceOrder";
+import { Box, Typography, Divider, Button } from "@mui/material";
+
 function App() {
+  const [cartItems, setCartItems] = useState([]);
+
+  const handleAddToCart = (product) => {
+    setCartItems((prev) => [...prev, product]);
+  };
+
+  const categories = [
+    { name: "kids", label: "👦 Kids Products" },
+    { name: "men", label: "👨 Men Products" },
+    { name: "newarrival", label: "🆕 New Arrival Products" },
+    { name: "summer", label: "☀️ Summer Products" },
+    { name: "winter", label: "❄️ Winter Products" },
+    { name: "shoes", label: "👟 Shoes Products" },
+    { name: "accessories", label: "🧢 Accessories Products" }
+  ];
+
+  const handleClearCart = () => {
+    setCartItems([]);
+  };
+
   return (
     <>
-      <Box sx={{ padding: "20px" }}>
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>👦 Kids Products</Typography>
-        <ProductList category="kids" />
-        <Divider sx={{ margin: "40px 0" }} />
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>👨 Men Products</Typography>
-        <ProductList category="men" />
-        <Divider sx={{ margin: "40px 0" }} />
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>👨 Newarrival Products</Typography>
-        <ProductList category="newarrival" />
-        <Divider sx={{ margin: "40px 0" }} />
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>👨 Summer Products</Typography>
-        <ProductList category="summer" />
-        <Divider sx={{ margin: "40px 0" }} />
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>👨 Winter Products</Typography>
-        <ProductList category="winter" />
-        <Divider sx={{ margin: "40px 0" }} />
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>👨 Shoes Products</Typography>
-        <ProductList category="shoes" />
-        <Divider sx={{ margin: "40px 0" }} />
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>👨 Accessories Products</Typography>
-        <ProductList category="accessories" />
+      {/* 🧾 Auth Section */}
+      <Box sx={{ padding: "20px", backgroundColor: "#e0f7fa" }}>
+        <Typography variant="h5" sx={{ my: 2}}>🔑 Register</Typography>
+        <Register />
+        <Typography variant="h5" sx={{ my: 2 }}>🔐 Login</Typography>
+        <Login />
       </Box>
-      <Box sx={{ marginTop: "40px" }}>
+      {/* 🛒 Products Section */}
+      <Box sx={{ padding: "20px" }}>
+        {categories.map((cat) => (
+          <React.Fragment key={cat.name}>
+            <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+              {cat.label}
+            </Typography>
+            <ProductList category={cat.name} onAddToCart={handleAddToCart} />
+            <Divider sx={{ margin: "40px 0" }} />
+          </React.Fragment>
+        ))}
+      </Box>
+
+      {/* 🧑‍💼 Admin: Add Product */}
+      <Box sx={{ padding: "20px", backgroundColor: "#f5f5f5" }}>
+        <Typography variant="h5" sx={{ marginBottom: "10px" }}>
+          🛠️ Admin Panel: Add Product
+        </Typography>
         <AddProduct />
+      </Box>
+
+      {/* 🛒 Cart Section */}
+      <Box sx={{ padding: "20px", backgroundColor: "#fff3e0" }}>
+        <Typography variant="h5" sx={{ marginBottom: "10px" }}>
+          🧾 Cart & Order
+        </Typography>
+        {cartItems.length > 0 ? (
+          <>
+            <ul>
+              {cartItems.map((item, index) => (
+                <li key={index}>
+                  {item.product?.title} - {item.price?.amount} EGP
+                </li>
+              ))}
+            </ul>
+            <Box sx={{ mt: 2 }}>
+              <PlaceOrder cartItems={cartItems} />
+              <Button variant="outlined" color="error" sx={{ ml: 2 }} onClick={handleClearCart}>
+                🗑️ Clear Cart
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <Typography>🛒 Your cart is empty. Please add products to your cart.</Typography>
+        )}
       </Box>
     </>
   );
