@@ -19,27 +19,44 @@ const files = [
   { file: "winter.json", collection: "winter" },
   { file: "shoes.json", collection: "shoes" },
   { file: "accessories.json", collection: "accessories" },
+  { file: "trousers.json", collection: "trousers" },
 ];
 
 // عملية الرفع
 files.forEach(({ file, collection }) => {
   const filePath = path.join(__dirname, file);
-  const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
-  const items = data.collection?.[collection] || data[collection];
+  console.log(`📂 Processing file: ${file} → collection: ${collection}`);
 
-  if (!items) {
-    console.warn(
-      `⚠ No data found for collection '${collection}' in file '${file}'`
-    );
-    return;
-  }
+  try {
+    const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const items = data.collection?.[collection] || data[collection];
 
-  items.forEach(async (item) => {
-    try {
-      await db.collection(collection).doc(item.id).set(item);
-      console.log(`✅ Uploaded to [${collection}]: ${item.product.title}`);
-    } catch (error) {
-      console.error(`❌ Failed to upload ${item.product.title}:`, error);
+    if (!items) {
+      console.warn(
+        `⚠ No data found for collection '${collection}' in file '${file}'`
+      );
+      return;
     }
-  });
+
+    items.forEach(async (item) => {
+      try {
+        if (!item?.title) {
+          console.warn(
+            `⚠ Skipping item with missing title in [${collection}] from file '${file}'`
+          );
+          return;
+        }
+
+        await db.collection(collection).doc(item.id).set(item);
+        console.log(`✅ Uploaded to [${collection}]: ${item.title}`);
+      } catch (error) {
+        console.error(
+          `❌ Failed to upload item from [${collection}] in file '${file}':`,
+          error
+        );
+      }
+    });
+  } catch (err) {
+    console.error(`❌ Error reading or parsing file '${file}':`, err.message);
+  }
 });

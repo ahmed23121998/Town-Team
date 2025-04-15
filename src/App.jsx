@@ -21,7 +21,8 @@ function App() {
     { name: "summer", label: "☀️ Summer Products" },
     { name: "winter", label: "❄️ Winter Products" },
     { name: "shoes", label: "👟 Shoes Products" },
-    { name: "accessories", label: "🧢 Accessories Products" }
+    { name: "accessories", label: "🧢 Accessories Products" },
+    { name: "trousers", label: "👖 Trousers Products" },
   ];
 
   const handleClearCart = () => {

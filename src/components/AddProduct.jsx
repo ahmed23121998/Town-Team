@@ -141,9 +141,9 @@ const AddProduct = () => {
             <MenuItem value="newarrival">New Arrival</MenuItem>
             <MenuItem value="shoes">Shoes</MenuItem>
             <MenuItem value="accessories">Accessories</MenuItem>
+            <MenuItem value="trousers">Trousers</MenuItem>
           </Select>
         </FormControl>
-
         <Button variant="contained" color="primary" type="submit">
           Add Product
         </Button>
